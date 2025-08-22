@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+This is an example XAML file showing how VoicePage would be structured in a real MAUI app.
+In the console demo, this isn't compiled, but shows the UI structure.
+-->
+<ContentPage x:Class="MauiApp.Pages.VoicePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Voice Assistant"
+             BackgroundColor="{DynamicResource Primary}">
+    
+    <Grid x:Name="MainGrid">
+        <!-- WebView will be added programmatically to load Vue UI -->
+        <!-- Vue UI from webapp/index.html will be loaded here -->
+    </Grid>
+    
+</ContentPage>
