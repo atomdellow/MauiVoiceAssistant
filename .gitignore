@@ -52,3 +52,15 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Development secrets and config
+appsettings.Development.json
+.env
+OPENAI_API_KEY
+
+# Vue build artifacts
+VueUI/dist/
+VueUI/node_modules/
+
+# MAUI generated webapp resources (copied from Vue build)
+MauiApp/Resources/Raw/webapp/

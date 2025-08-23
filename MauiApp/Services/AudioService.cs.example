@@ -1,0 +1,106 @@
+using Plugin.Maui.Audio;
+
+namespace MauiApp.Services;
+
+// This file shows how AudioService would work with Plugin.Maui.Audio in a real MAUI app
+// The current AudioService.cs is simplified for the console demo
+
+/*
+public class AudioService
+{
+    private readonly IAudioManager _audioManager;
+    private IAudioRecorder? _audioRecorder;
+    private IAudioPlayer? _audioPlayer;
+
+    public AudioService(IAudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
+
+    public async Task<string> StartRecordingAsync()
+    {
+        try
+        {
+            // Request microphone permission
+            if (!await Permissions.CheckStatusAsync<Permissions.Microphone>().ConfigureAwait(false) != PermissionStatus.Granted)
+            {
+                var status = await Permissions.RequestAsync<Permissions.Microphone>().ConfigureAwait(false);
+                if (status != PermissionStatus.Granted)
+                {
+                    throw new UnauthorizedAccessException("Microphone permission is required for voice recording.");
+                }
+            }
+
+            var cacheDir = FileSystem.Current.CacheDirectory;
+            var fileName = $"recording_{DateTime.Now:yyyyMMdd_HHmmss}.wav";
+            var filePath = Path.Combine(cacheDir, fileName);
+
+            _audioRecorder = _audioManager.CreateRecorder();
+            await _audioRecorder.StartAsync(filePath);
+
+            return filePath;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to start recording: {ex.Message}", ex);
+        }
+    }
+
+    public async Task<string> StopRecordingAsync()
+    {
+        try
+        {
+            if (_audioRecorder == null)
+                throw new InvalidOperationException("No active recording session.");
+
+            var filePath = await _audioRecorder.StopAsync();
+            _audioRecorder?.Dispose();
+            _audioRecorder = null;
+
+            return filePath;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to stop recording: {ex.Message}", ex);
+        }
+    }
+
+    public async Task PlayAudioAsync(string filePath)
+    {
+        try
+        {
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"Audio file not found: {filePath}");
+
+            _audioPlayer?.Dispose();
+            _audioPlayer = _audioManager.CreatePlayer(File.OpenRead(filePath));
+            _audioPlayer.Play();
+
+            // Wait for playback to complete
+            while (_audioPlayer.IsPlaying)
+            {
+                await Task.Delay(100);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to play audio: {ex.Message}", ex);
+        }
+        finally
+        {
+            _audioPlayer?.Dispose();
+            _audioPlayer = null;
+        }
+    }
+
+    public void StopPlayback()
+    {
+        _audioPlayer?.Stop();
+        _audioPlayer?.Dispose();
+        _audioPlayer = null;
+    }
+
+    public bool IsRecording => _audioRecorder != null;
+    public bool IsPlaying => _audioPlayer?.IsPlaying ?? false;
+}
+*/

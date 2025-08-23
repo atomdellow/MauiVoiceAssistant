@@ -1,0 +1,143 @@
+using MauiApp.ViewModels;
+using Microsoft.AspNetCore.Components.WebView.Maui;
+
+namespace MauiApp.Pages;
+
+// This file shows how the MAUI implementation would work with HybridWebView
+// In the console demo, this isn't compiled, but it's here for reference
+
+/*
+public partial class VoicePage : ContentPage
+{
+    private readonly VoiceViewModel _viewModel;
+    private WebView? _webView;
+
+    public VoicePage(VoiceViewModel viewModel)
+    {
+        InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
+        
+        CreateWebView();
+    }
+
+    private void CreateWebView()
+    {
+        _webView = new WebView
+        {
+            VerticalOptions = LayoutOptions.FillAndExpand,
+            HorizontalOptions = LayoutOptions.FillAndExpand
+        };
+
+        // Set the source to the Vue app
+        var source = new UrlWebViewSource
+        {
+            Url = "ms-appx-web:///webapp/index.html"
+        };
+        _webView.Source = source;
+
+        // Handle JavaScript messages
+        _webView.Navigated += OnWebViewNavigated;
+
+        MainGrid.Children.Add(_webView);
+    }
+
+    private async void OnWebViewNavigated(object? sender, WebNavigatedEventArgs e)
+    {
+        if (_webView == null) return;
+
+        // Inject the bridge JavaScript
+        var bridgeScript = @"
+            window.hybridBridge = {
+                sendAction: function(action) {
+                    window.location.href = 'bridge://' + action;
+                }
+            };
+        ";
+
+        await _webView.EvaluateJavaScriptAsync(bridgeScript);
+
+        // Handle navigation requests from JavaScript
+        _webView.Navigating += OnWebViewNavigating;
+    }
+
+    private async void OnWebViewNavigating(object? sender, WebNavigatingEventArgs e)
+    {
+        if (e.Url.StartsWith("bridge://"))
+        {
+            e.Cancel = true; // Prevent actual navigation
+            
+            var action = e.Url.Substring("bridge://".Length);
+            await HandleBridgeAction(action);
+        }
+    }
+
+    private async Task HandleBridgeAction(string action)
+    {
+        try
+        {
+            switch (action)
+            {
+                case "start-recording":
+                    await _viewModel.StartRecordingAsync();
+                    break;
+                    
+                case "stop-recording":
+                    await HandleStopRecording();
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log error and notify user
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+    }
+
+    private async Task HandleStopRecording()
+    {
+        try
+        {
+            // Stop recording and get transcription
+            var transcribedText = await _viewModel.StopAndTranscribeAsync();
+            
+            if (string.IsNullOrWhiteSpace(transcribedText))
+            {
+                await SendReplyToWebView("I didn't catch that. Could you try again?");
+                return;
+            }
+
+            // Get assistant reply and speak it
+            var assistantReply = await _viewModel.GetReplyAndSpeakAsync(transcribedText);
+            
+            // Send reply to Vue app
+            await SendReplyToWebView(assistantReply);
+        }
+        catch (Exception ex)
+        {
+            await SendReplyToWebView($"Sorry, I encountered an error: {ex.Message}");
+        }
+    }
+
+    private async Task SendReplyToWebView(string text)
+    {
+        if (_webView == null) return;
+
+        // Escape quotes and newlines for JavaScript
+        var escapedText = text.Replace("\\", "\\\\")
+                             .Replace("\"", "\\\"")
+                             .Replace("\n", "\\n")
+                             .Replace("\r", "");
+
+        var script = $"if (window.onAssistantReply) {{ window.onAssistantReply(\"{escapedText}\"); }}";
+        
+        await _webView.EvaluateJavaScriptAsync(script);
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        _viewModel.StopAllOperations();
+    }
+}
+*/
